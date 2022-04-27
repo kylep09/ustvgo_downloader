@@ -1,7 +1,9 @@
+
 #!/usr/bin/env python3
 
 from optparse import Option
 import os
+from os.path import exists
 import re
 import sys
 import tarfile
@@ -90,7 +92,8 @@ if __name__ == '__main__':
         print('Invalid arguments', file=sys.stderr)
         exit(1)
 
-    if not os.path.isfile('ustvgo.m3u8'):
+    if not exists(f"{sys.path[0]}/ustvgo.m3u8"):
+        print(f'checking for {sys.path[0]}/ustvgo.m3u8')
         print('playlist ustvgo.m3u8 not found', file=sys.stderr)
         exit(1)
 
@@ -197,8 +200,8 @@ if __name__ == '__main__':
 
         print('Updating ustvgo.m3u8 playlist...', file=sys.stderr)
 
-        playlist_text = open('ustvgo.m3u8', 'r').read()
+        playlist_text = open(f'{sys.path[0]}/ustvgo.m3u8', 'r').read()
         playlist_text = re.sub('(?<=wmsAuthSign=).*(?=\n)', captured_key, playlist_text)
 
-        with open('ustvgo.m3u8', 'w') as file:
+        with open(f'{sys.path[0]}/ustvgo.m3u8', 'w') as file:
             file.write(playlist_text)
