@@ -11,6 +11,7 @@ import zipfile
 import json
 from argparse import ArgumentParser
 from time import sleep
+from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
@@ -96,18 +97,18 @@ if __name__ == '__main__':
     args_parser.add_argument('-m', '--max-retries', type=int, default=3, help='Maximum number of attempts to collect data')
     args_parser.add_argument('-p', '--proxy', type=str, default=None, help='Use proxy')
     args = args_parser.parse_args()
-    args.no_headless = True
+    args.no_headless = False
     if args.max_retries <= 0 or args.timeout <= 0:
         print('Invalid arguments', file=sys.stderr)
         exit(1)
 
-    check_gecko_driver()
+    #check_gecko_driver()
 
     ff_options = Options()
     if not args.no_headless:
         ff_options.add_argument('--headless')
 
-    print('Downloading the playlist, please wait...', file=sys.stderr)
+    print(f'Downloading the playlist, please wait...{datetime.now().strftime("%m/%d/%Y %H:%M:%S")}', file=sys.stderr)
     firefox_profile = ff_options
     firefox_profile.set_preference('permissions.default.image', 2)
     firefox_profile.set_preference('dom.ipc.plugins.enabled.libflashplayer.so', 'false')

@@ -10,6 +10,8 @@ import tarfile
 import zipfile
 from argparse import ArgumentParser
 from time import sleep
+from datetime import datetime
+
 
 import requests
 from bs4 import BeautifulSoup
@@ -99,7 +101,7 @@ if __name__ == '__main__':
 
     check_gecko_driver()
 
-    print('Updating authentication key, please wait...')
+    print(f'Updating authentication key, please wait...{datetime.now().strftime("%m/%d/%Y %H:%M:%S")}')
 
     ff_options = Options()
     if not args.no_headless:
